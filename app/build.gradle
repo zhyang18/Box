@@ -27,8 +27,24 @@ android {
         exclude 'META-INF/DEPENDENCIES'
     }
 
+    signingConfigs {
+        myConfig {
+            storeFile file("Box_app.jks")
+            storePassword "zy123456789"
+            keyAlias "zy123456789"
+            keyPassword "zy123456789"
+        }
+    }
+    //指定apk生成的名字
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "TVBox_${variant.versionName}_${output.baseName}.apk"
+        }
+    }
+
     buildTypes {        
         release {
+            signingConfig signingConfigs.myConfig
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true
             ndk {
